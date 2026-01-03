@@ -9,7 +9,7 @@ use super::RawShared;
 
 /// A RAII-style guard that keeps the current thread in an EBR critical section.
 pub struct Guard {
-    pub(crate) local: *const Local,
+    pub local: *const Local,
 }
 
 impl Guard {
@@ -37,7 +37,7 @@ impl Guard {
     ///
     /// Apart from that, keep in mind that another thread may execute `f`, so anything accessed by
     /// the closure must be `Send`.
-    pub(crate) unsafe fn defer_unchecked<F, R>(&self, f: F)
+    pub unsafe fn defer_unchecked<F, R>(&self, f: F)
     where
         F: FnOnce() -> R,
     {
@@ -71,7 +71,7 @@ impl Guard {
     ///
     /// Apart from that, keep in mind that another thread may execute the destructor, so the object
     /// must be sendable to other threads.
-    pub(crate) unsafe fn defer_destroy<T>(&self, ptr: RawShared<T>) {
+    pub unsafe fn defer_destroy<T>(&self, ptr: RawShared<T>) {
         self.defer_unchecked(move || unsafe { ptr.drop() });
     }
 
@@ -130,7 +130,7 @@ impl Guard {
 
     /// Increases the manual collection counter, and perform collection if the counter reaches
     /// the threshold which is set by `set_manual_collection_interval`.
-    pub(crate) fn incr_manual_collection(&self) {
+    pub fn incr_manual_collection(&self) {
         if let Some(local) = unsafe { self.local.as_ref() } {
             local.incr_manual_collection(self);
         }

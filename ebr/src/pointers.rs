@@ -59,7 +59,7 @@ impl<T> From<*mut T> for Tagged<T> {
     }
 }
 
-pub(crate) const HIGH_TAG_WIDTH: u32 = 4;
+pub const HIGH_TAG_WIDTH: u32 = 4;
 
 impl<T> Tagged<T> {
     const fn high_bits_pos() -> u32 {
@@ -140,6 +140,15 @@ impl<T> Tagged<T> {
         // accessed epoch for the pointer.
         self.with_high_tag(0).ptr == other.with_high_tag(0).ptr
     }
+
+    /// Returns a new pointer with the high tag set to the current global epoch.
+    pub fn with_timestamp(self) -> Self {
+        if self.is_null() {
+            self
+        } else {
+            self.with_high_tag(super::global_epoch())
+        }
+    }
 }
 
 /// Returns a bitmask containing the unused least significant bits of an aligned pointer to `T`.
@@ -152,7 +161,7 @@ fn with_tag<T>(ptr: *mut T, tag: usize) -> *mut T {
     ((ptr as usize & !low_bits::<T>()) | (tag & low_bits::<T>())) as *mut T
 }
 
-pub(crate) struct RawAtomic<T> {
+pub struct RawAtomic<T> {
     inner: Atomic<Tagged<T>>,
 }
 
@@ -212,7 +221,7 @@ impl<T> RawAtomic<T> {
 }
 
 // A shared pointer type only for the internal EBR implementation.
-pub(crate) struct RawShared<'g, T> {
+pub struct RawShared<'g, T> {
     inner: Tagged<T>,
     _marker: PhantomData<&'g T>,
 }

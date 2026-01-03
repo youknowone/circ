@@ -10,7 +10,7 @@ use std::{
 use atomic::Atomic;
 use static_assertions::const_assert;
 
-use crate::ebr_impl::{global_epoch, Guard, Tagged};
+use circ_ebr::{Guard, Tagged};
 use crate::utils::{Raw, RcInner};
 use crate::{Weak, WeakSnapshot};
 
@@ -70,16 +70,6 @@ pub unsafe trait RcObject: Sized {
     /// It does not need to take all the edges in the node, because the destructors of `Rc` and
     /// `AtomicRc` schedule the decrement and destruction anyway.
     fn pop_edges(&mut self, out: &mut Vec<Rc<Self>>);
-}
-
-impl<T> Tagged<RcInner<T>> {
-    fn with_timestamp(self) -> Self {
-        if self.is_null() {
-            self
-        } else {
-            self.with_high_tag(global_epoch())
-        }
-    }
 }
 
 /// Result of a failed `compare_exchange` operation.

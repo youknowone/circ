@@ -13,7 +13,7 @@ use core::sync::atomic::Ordering::{Acquire, Relaxed, Release};
 
 use crossbeam_utils::{Backoff, CachePadded};
 
-use crate::ebr_impl::{RawAtomic, RawShared};
+use crate::{RawAtomic, RawShared};
 
 use super::super::{unprotected, Guard};
 
@@ -215,7 +215,7 @@ impl<T> Drop for Queue<T> {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::ebr_impl::cs;
+    use crate::cs;
     use crossbeam_utils::thread;
 
     struct Queue<T> {

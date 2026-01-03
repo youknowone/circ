@@ -48,14 +48,14 @@
 //! For majority of use cases, just use the default garbage collector by invoking [`pin`]. If you
 //! want to create your own garbage collector, use the [`Collector`] API.
 
-mod collector;
+pub mod collector;
 mod default;
 mod deferred;
 mod epoch;
 mod guard;
-mod internal;
+pub mod internal;
 mod pointers;
-mod sync;
+pub mod sync;
 
 pub use default::*;
 pub use epoch::*;

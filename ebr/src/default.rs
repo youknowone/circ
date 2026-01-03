@@ -41,7 +41,7 @@ where
 }
 
 #[inline]
-pub(crate) fn global_epoch() -> usize {
+pub fn global_epoch() -> usize {
     default_collector().global_epoch().value()
 }
 

@@ -1,3 +1,7 @@
+[workspace]
+members = [".", "ebr"]
+resolver = "2"
+
 [package]
 name = "circ"
 version = "0.2.0"
@@ -13,14 +17,13 @@ categories = ["concurrency", "memory-management"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-crossbeam-utils = "0.8"
-scopeguard = "1.1.0"
+circ-ebr = { path = "ebr" }
 static_assertions = "1.1.0"
 atomic = "0.5"
 cfg-if = "1.0"
 rustc-hash = "1.1.0"
-memoffset = "0.7"
 
 [dev-dependencies]
 rand = "0.8"
 bitflags = "2.4.0"
+crossbeam-utils = "0.8"

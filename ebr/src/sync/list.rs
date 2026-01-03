@@ -6,7 +6,7 @@
 use core::marker::PhantomData;
 use std::sync::atomic::Ordering::{Acquire, Relaxed, Release};
 
-use crate::ebr_impl::{RawAtomic, RawShared};
+use crate::{RawAtomic, RawShared};
 
 use super::super::{unprotected, Guard};
 
@@ -298,7 +298,7 @@ impl<'g, T: 'g, C: IsElement<T>> Iterator for Iter<'g, T, C> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ebr_impl::collector::Collector;
+    use crate::collector::Collector;
     use crossbeam_utils::thread;
     use std::sync::Barrier;
 

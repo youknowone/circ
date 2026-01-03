@@ -258,7 +258,7 @@ impl Global {
 }
 
 /// Participant for garbage collection.
-pub(crate) struct Local {
+pub struct Local {
     /// A node in the intrusive linked list of `Local`s.
     entry: Entry,
 
@@ -489,7 +489,7 @@ impl Local {
 
     /// Repins the local epoch without checking a scheduled collection.
     #[inline]
-    pub(crate) fn repin_without_collect(&self) -> Epoch {
+    pub fn repin_without_collect(&self) -> Epoch {
         let epoch = self.epoch.load(Ordering::Relaxed);
         let global_epoch = self.global().epoch.load(Ordering::Relaxed).pinned();
 

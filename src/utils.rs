@@ -2,7 +2,7 @@ use std::cell::Cell;
 use std::sync::atomic::Ordering;
 use std::{mem::ManuallyDrop, sync::atomic::AtomicU64};
 
-use crate::ebr_impl::{cs, global_epoch, Guard, Tagged, HIGH_TAG_WIDTH};
+use circ_ebr::{cs, global_epoch, Guard, Tagged, HIGH_TAG_WIDTH};
 use crate::RcObject;
 
 /// Raw pointer to a reference counted object. Allows tagging.

@@ -8,7 +8,7 @@ use std::{
 use atomic::Atomic;
 use static_assertions::const_assert;
 
-use crate::ebr_impl::{Guard, Tagged};
+use circ_ebr::{Guard, Tagged};
 use crate::utils::{Raw, RcInner};
 use crate::{CompareExchangeError, Rc, RcObject, Snapshot};
 
